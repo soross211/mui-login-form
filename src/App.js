@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import theme from './theme';
+import LoginForm from './components/Auth/LoginForm'; // Fixed import
+import SignUpForm from './components/Auth/SignUpForm';
+import ForgotPasswordForm from './components/Auth/ForgotPasswordForm';
+import HomePage from './components/HomePage';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <AuthProvider>
+        <Routes>
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/signup" element={<SignUpForm />} />
+          <Route path="/forgot-password" element={<ForgotPasswordForm />} />
+          <Route
+            path="/home"
+            element={
+              <ProtectedRoute>
+                <HomePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/" element={<Navigate to="/login" replace />} />
+        </Routes>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 
