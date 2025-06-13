@@ -104,4 +104,4 @@ const ForgotPasswordForm = () => {
   );
 };
 
-export default ForgotPasswordForm;
+export default ForgotPasswordForm;   
